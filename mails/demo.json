@@ -4,6 +4,6 @@
 	"time": "* 1 * * * *",
 	"recipients": ["admin@example.com"],
 	"variables": {
-		"UPDATED": "10/05/2020 5pm"
+		"LAST_UPDATED": "10/05/2020 5pm"
 	}
 }
