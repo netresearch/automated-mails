@@ -5,6 +5,7 @@ node_modules
 .gitignore
 .editorconfig
 .env.default
+.env
 
 Dockerfile
 .dockerignore
