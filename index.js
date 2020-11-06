@@ -1,14 +1,22 @@
 const NodeMailer = require('nodemailer');
-const FS = require('fs');
-const NodeCron = require('node-cron');
 const Path = require('path');
 const Consola = require('consola');
+const Express = require('express');
+const BodyParser = require('body-parser')
+const MailManager = require('./lib/MailManager');
 require('dotenv').config();
 
 let MAIL_SERVER_PORT = parseInt(process.env.MAIL_SERVER_PORT);
+let API_PORT = parseInt(process.env.PORT) || 22003;
 
 if (isNaN(MAIL_SERVER_PORT)) {
 	console.error('MAIL_SERVER_PORT is not a number!');
+
+	return;
+}
+
+if (isNaN(API_PORT)) {
+	console.error('API_PORT is not a number!');
 
 	return;
 }
@@ -23,74 +31,20 @@ const transport = NodeMailer.createTransport({
 	}
 });
 
-/**
- * @param {string} filename
- * @param {string} subject
- * @param {string[]} recipients
- * @param {any} variables
- */
-const sendMail = async (filename, subject, recipients, variables) => {
-	Consola.info(`Sending ${subject} to ${recipients.length} mail addresses...`);
+const mailManager = MailManager.getInstance(Path.join(__dirname, 'mails'), transport)
 
-	let html = FS.readFileSync(Path.join(__dirname, 'mails', `${filename}.html`))
-		.toString()
-		.replace('{DATE}', new Date().toLocaleDateString())
-		.replace('{TIME}', new Date().toLocaleTimeString());
+const server = Express();
 
-	let text = FS.readFileSync(Path.join(__dirname, 'mails', `${filename}.txt`))
-		.toString()
-		.replace('{DATE}', new Date().toLocaleDateString())
-		.replace('{TIME}', new Date().toLocaleTimeString());
-
-	for (const variable in variables) {
-		html = html.replace(`{${variable}}`, variables[variable]);
-		text = html.replace(`{${variable}}`, variables[variable]);
-	}
-
-	await transport.sendMail({
-		to: process.env.MAIL_USERNAME,
-		bcc: recipients,
-		html,
-		text,
-		subject
-	});
-
-	Consola.success(`Sent ${subject} to ${recipients.length} mail addresses!`);
-};
+server.use(BodyParser.json())
 
 const main = async () => {
-	Consola.info('Scanning configured mails...');
+	mailManager.load()
 
-	const mailFilenames = FS.readdirSync(Path.join(__dirname, 'mails')).filter((f) => f.endsWith('.json'));
+	server.use(require('./lib/routes'));
 
-	Consola.success(`Found ${mailFilenames.length} mails!`);
+	await new Promise((res) => server.listen(API_PORT, () => res()));
 
-	for (const filename of mailFilenames) {
-		Consola.debug(`Loading ${filename}...`);
-
-		const splitFilename = filename.split('.');
-		splitFilename.pop();
-
-		const cleanFilename = splitFilename.join('.');
-
-		const mail = require(Path.join(__dirname, 'mails', filename));
-
-		if (!mail.recipients) {
-			mail.recipients = [];
-		}
-
-		if (!mail.variables) {
-			mail.variables = {};
-		}
-
-		const { recipients, variables } = mail;
-
-		NodeCron.schedule(mail.time, () => sendMail(cleanFilename, mail.subject, recipients, variables));
-
-		Consola.success(
-			`Loaded ${mail.name} (${recipients.length} recipients, ${Object.keys(variables).length} variables)!`
-		);
-	}
+	Consola.success(`Listening on port ${API_PORT}`);
 };
 
 main();
