@@ -2,7 +2,6 @@ const NodeMailer = require('nodemailer');
 const Path = require('path');
 const Consola = require('consola');
 const Express = require('express');
-const BodyParser = require('body-parser')
 const MailManager = require('./lib/MailManager');
 require('dotenv').config();
 
@@ -35,7 +34,7 @@ const mailManager = MailManager.getInstance(Path.join(__dirname, 'mails'), trans
 
 const server = Express();
 
-server.use(BodyParser.json())
+server.use(Express.json());
 
 const main = async () => {
 	mailManager.load()
