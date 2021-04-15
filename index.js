@@ -38,14 +38,14 @@ const transport = NodeMailer.createTransport({
 	}
 });
 
-const mailManager = MailManager.getInstance(Path.join(__dirname, 'mails'), transport)
+const mailManager = MailManager.getInstance(Path.join(__dirname, 'mails'), transport);
 
 const server = Express();
 
 server.use(Express.json());
 
 const main = async () => {
-	mailManager.load()
+	mailManager.load();
 
 	server.use(require('./lib/routes'));
 
