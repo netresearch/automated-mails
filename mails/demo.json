@@ -2,6 +2,7 @@
 	"name": "Demo",
 	"subject": "Demo",
 	"time": "0 * * * * *",
+	"from": "system@example.com",
 	"to": "admin@example.com",
 	"cc": ["root@example.com"],
 	"bcc": ["sysadmin@example.com"],

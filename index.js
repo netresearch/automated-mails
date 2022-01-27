@@ -5,16 +5,21 @@ const Express = require('express');
 const MailManager = require('./lib/MailManager');
 require('dotenv').config();
 
-if (
-	!(process.env.MAIL_SERVER && process.env.MAIL_SERVER_PORT && process.env.MAIL_USERNAME && process.env.MAIL_PASSWORD && process.env.PORT)
-) {
-	console.error('MAIL_SERVER, MAIL_SERVER_PORT, MAIL_USERNAME, MAIL_PASSWORD or PORT not set!');
+if (!(process.env.MAIL_SERVER && process.env.MAIL_SERVER_PORT && process.env.PORT)) {
+	console.error('MAIL_SERVER, MAIL_SERVER_PORT or PORT not set!');
 
 	process.exit(1);
 }
 
-let MAIL_SERVER_PORT = parseInt(process.env.MAIL_SERVER_PORT);
-let API_PORT = parseInt(process.env.PORT) || 22003;
+if (process.env.MAIL_USERNAME && !process.env.MAIL_PASSWORD) {
+	console.error('MAIL_USERNAME is set but MAIL_PASSWORD is not!');
+
+	process.exit(1);
+}
+
+const MAIL_SERVER_PORT = parseInt(process.env.MAIL_SERVER_PORT);
+const MAIL_SERVER_TLS = process.env.MAIL_SERVER_TLS === 'true' || process.env.MAIL_SERVER_TLS === '1';
+const API_PORT = parseInt(process.env.PORT) || 22003;
 
 if (isNaN(MAIL_SERVER_PORT)) {
 	console.error('MAIL_SERVER_PORT is not a number!');
@@ -31,7 +36,7 @@ if (isNaN(API_PORT)) {
 const transport = NodeMailer.createTransport({
 	host: process.env.MAIL_SERVER,
 	port: MAIL_SERVER_PORT,
-	secure: true,
+	secure: MAIL_SERVER_TLS,
 	auth: {
 		user: process.env.MAIL_USERNAME,
 		pass: process.env.MAIL_PASSWORD
