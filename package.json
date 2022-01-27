@@ -1,6 +1,6 @@
 {
 	"name": "@netresearch/automated-mails",
-	"version": "1.0.0",
+	"version": "2.0.0",
 	"main": "index.js",
 	"author": "TheDevMinerTV <tobigames200@gmail.com>",
 	"license": "MIT",
