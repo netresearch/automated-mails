@@ -2,8 +2,11 @@
 	"name": "Demo",
 	"subject": "Demo",
 	"time": "0 * * * * *",
-	"recipients": ["admin@example.com"],
+	"to": "admin@example.com",
+	"cc": ["root@example.com"],
+	"bcc": ["sysadmin@example.com"],
+	"recipients_comment": "`recipients` has been deprecated in favor of `bcc`.",
 	"variables": {
-		"LAST_UPDATED": "10/05/2020 5pm"
+		"LAST_UPDATED": "01/27/2022 5pm"
 	}
 }
