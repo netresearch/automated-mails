@@ -37,10 +37,14 @@ const transport = NodeMailer.createTransport({
 	host: process.env.MAIL_SERVER,
 	port: MAIL_SERVER_PORT,
 	secure: MAIL_SERVER_TLS,
-	auth: {
-		user: process.env.MAIL_USERNAME,
-		pass: process.env.MAIL_PASSWORD
-	}
+	...(process.env.MAIL_USERNAME && process.env.MAIL_PASSWORD
+		? {
+				auth: {
+					user: process.env.MAIL_USERNAME,
+					pass: process.env.MAIL_PASSWORD
+				}
+		  }
+		: {})
 });
 
 const mailManager = MailManager.getInstance(Path.join(__dirname, 'mails'), transport);
