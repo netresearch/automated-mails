@@ -1,4 +1,4 @@
-FROM node:erbium-alpine
+FROM node:16-alpine
 
 WORKDIR /app
 EXPOSE 22003
