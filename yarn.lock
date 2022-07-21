@@ -244,10 +244,10 @@ node-cron@^3.0.1:
   resolved "https://registry.yarnpkg.com/node-cron/-/node-cron-3.0.1.tgz#6a9d5a71513c7ee1eb9e64a673f6730084561d87"
   integrity sha512-RAWZTNn2M5KDIUV/389UX0EXsqvdFAwc9QwHQceh0Ga56dygqSRthqIjwpgZsoDspHGt2rkHdk9Z4RgfPMdALw==
 
-nodemailer@^6.7.4:
-  version "6.7.5"
-  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.7.5.tgz#b30b1566f5fa2249f7bd49ced4c58bec6b25915e"
-  integrity sha512-6VtMpwhsrixq1HDYSBBHvW0GwiWawE75dS3oal48VqRhUvKJNnKnJo2RI/bCVQubj1vgrgscMNW4DHaD6xtMCg==
+nodemailer@^6.7.6:
+  version "6.7.7"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.7.7.tgz#e522fbd7507b81c51446d3f79c4603bf00083ddd"
+  integrity sha512-pOLC/s+2I1EXuSqO5Wa34i3kXZG3gugDssH+ZNCevHad65tc8vQlCQpOLaUjopvkRQKm2Cki2aME7fEOPRy3bA==
 
 on-finished@~2.3.0:
   version "2.3.0"
