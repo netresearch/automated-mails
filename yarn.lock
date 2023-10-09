@@ -284,9 +284,9 @@ node-cron@^3.0.2:
     uuid "8.3.2"
 
 nodemailer@^6.9.2:
-  version "6.9.5"
-  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.9.5.tgz#eaeae949c62ec84ef1e9128df89fc146a1017aca"
-  integrity sha512-/dmdWo62XjumuLc5+AYQZeiRj+PRR8y8qKtFCOyuOl1k/hckZd8durUUHs/ucKx6/8kN+wFxqKJlQ/LK/qR5FA==
+  version "6.9.6"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.9.6.tgz#5a38a2a4d9fb1e349542a138f9e2d5c760a663ed"
+  integrity sha512-s7pDtWwe5fLMkQUhw8TkWB/wnZ7SRdd9HRZslq/s24hlZvBP3j32N/ETLmnqTpmj4xoBZL9fOWyCIZ7r2HORHg==
 
 object-inspect@^1.9.0:
   version "1.12.2"
